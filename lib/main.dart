@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:melisa_store/route/routes.dart';
-import 'package:melisa_store/screens/splash_view.dart';
 
 void main() {
   runApp(MyApp());
