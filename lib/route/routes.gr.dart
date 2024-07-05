@@ -12,6 +12,7 @@ import 'package:auto_route/auto_route.dart' as _i4;
 import 'package:melisa_store/screens/home_view.dart' as _i1;
 import 'package:melisa_store/screens/products_view.dart' as _i2;
 import 'package:melisa_store/screens/splash_view.dart' as _i3;
+import 'package:melisa_store/screens/login_screen.dart' as _i5;
 
 abstract class $AppRouter extends _i4.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -34,6 +35,12 @@ abstract class $AppRouter extends _i4.RootStackRouter {
       return _i4.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i3.SplashView(),
+      );
+    },
+    LoginRoute.name: (routeData) {
+      return _i4.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i5.LoginScreen(),
       );
     },
   };
@@ -77,6 +84,18 @@ class SplashRoute extends _i4.PageRouteInfo<void> {
         );
 
   static const String name = 'SplashRoute';
+
+  static const _i4.PageInfo<void> page = _i4.PageInfo<void>(name);
+}
+
+class LoginRoute extends _i4.PageRouteInfo<void> {
+  const LoginRoute({List<_i4.PageRouteInfo>? children})
+      : super(
+          LoginRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LoginRoute';
 
   static const _i4.PageInfo<void> page = _i4.PageInfo<void>(name);
 }

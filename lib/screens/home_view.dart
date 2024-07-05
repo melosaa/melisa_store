@@ -15,7 +15,7 @@ import 'package:melisa_store/services/home_view_screen.dart';
 //   ],
 // )
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  HomeView({super.key});
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -34,26 +34,22 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(243, 243, 243, 243),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text("Home Page"),
-      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               Row(
                 children: [
                   Expanded(
                     child: Container(
-                      height: 70,
+                      height: 40,
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(202, 190, 190, 0.051),
                         borderRadius: BorderRadius.circular(15),
                         border: Border.all(color: Colors.black),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: const Row(
                         children: [
                           Icon(
@@ -77,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ],
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -86,19 +82,19 @@ class _HomeViewState extends State<HomeView> {
                     color: Colors.black,
                     borderColor: const Color.fromARGB(255, 212, 211, 211),
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 10),
                   _buildIconContainer(
                     icon: Icons.shopping_cart,
                     color: Colors.blue,
                     borderColor: const Color.fromARGB(255, 212, 211, 211),
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 10),
                   _buildIconContainer(
                     icon: CupertinoIcons.eyeglasses,
                     color: Colors.blue,
                     borderColor: const Color.fromARGB(255, 212, 211, 211),
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 10),
                   _buildIconContainer(
                     icon: Icons.shopping_bag,
                     color: Colors.brown,
@@ -106,10 +102,10 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               Container(
-                width: 480,
-                height: 150,
+                height: 90,
+                width: 250,
                 decoration: BoxDecoration(
                   border: Border.all(
                       color: const Color.fromARGB(210, 118, 118, 119)),
@@ -120,11 +116,11 @@ class _HomeViewState extends State<HomeView> {
                   child: Stack(
                     children: [
                       Positioned(
-                        top: 40,
-                        left: 50,
+                        top: 30,
+                        left: 30,
                         child: Container(
-                          width: 50,
-                          height: 50,
+                          padding: const EdgeInsets.all(4.0),
+                          // margin: const EdgeInsets.all(2.0),
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color:
@@ -137,38 +133,38 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
                       const Positioned(
-                        top: 30,
-                        left: 130,
+                        top: 20,
+                        left: 85,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               "50% OFF",
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
-                                fontSize: 30,
+                                fontSize: 20,
                               ),
                             ),
                             Text(
                               "on all women's shoes",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
-                                fontSize: 15,
+                                fontSize: 10,
                               ),
                             ),
                           ],
                         ),
                       ),
                       const Positioned(
-                        top: 50,
-                        right: 60,
-                        child: Icon(Icons.arrow_forward_ios),
+                        top: 35,
+                        right: 25,
+                        child: Icon(Icons.arrow_forward_ios_rounded),
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 10),
               Expanded(
                 child: FutureBuilder<List<Product>>(
                   future: futureProducts,
@@ -183,49 +179,48 @@ class _HomeViewState extends State<HomeView> {
                       return GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 30.0,
-                          mainAxisSpacing: 30.0,
+                          crossAxisSpacing: 2.0,
+                          mainAxisSpacing: 2.0,
                           crossAxisCount: 2,
                         ),
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           Product product = snapshot.data![index];
                           return Container(
-                            padding: EdgeInsets.all(6.0),
-                            margin: EdgeInsets.all(2.0),
-                            color: Colors.black,
-                            child: Container(
-                              margin: const EdgeInsets.all(10.0),
-                              padding: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                color: const Color.fromRGBO(232, 232, 232, 255),
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: Colors.grey),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  AspectRatio(
-                                    aspectRatio: 1,
+                            margin: EdgeInsets.all(24.0),
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: const Color.fromRGBO(232, 232, 232, 255),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: Colors.grey),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 100,
+                                  width: double.infinity,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
                                     child: Image.network(
                                       product.image,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
-                                  // TODO : üRÜN İSİMLERİ EKLENECEK
-                                  // const SizedBox(height: 10),
-                                  // Text(
-                                  //   product.title,
-                                  //   style: const TextStyle(
-                                  //     fontWeight: FontWeight.bold,
-                                  //   ),
-                                  //   maxLines: 1,
-                                  //   overflow: TextOverflow.ellipsis,
-                                  // ),
-                                  // const SizedBox(height: 5),
-                                  // Text('\$${product.price.toStringAsFixed(2)}'),
-                                ],
-                              ),
+                                ),
+                                // Text(product.title,
+                                //     style: TextStyle(
+                                //         fontSize: 8,
+                                //         fontWeight: FontWeight.bold)),
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
+                                // Text(
+                                //   product.price.toStringAsFixed(2),
+                                //   style: TextStyle(fontSize: 8),
+                                // ),
+                                // TODO : üRÜN İSİMLERİ EKLENECEK
+                              ],
                             ),
                           );
                         },
@@ -239,27 +234,40 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
+        backgroundColor: const Color.fromARGB(255, 35, 39, 44),
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Colors.yellow,
+            ),
             backgroundColor: Color.fromARGB(255, 35, 39, 44),
-            icon: Icon(Icons.home, color: Colors.yellow),
-            label: "home",
+            label: "",
           ),
           BottomNavigationBarItem(
+            icon: Icon(
+              Icons.favorite,
+              color: Colors.yellow,
+            ),
             backgroundColor: Color.fromARGB(255, 35, 39, 44),
-            icon: Icon(Icons.favorite, color: Colors.yellow),
-            label: "favorites",
+            label: "",
           ),
           BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_cart,
+              color: Colors.yellow,
+            ),
             backgroundColor: Color.fromARGB(255, 35, 39, 44),
-            icon: Icon(Icons.shopping_cart, color: Colors.yellow),
-            label: "shopping",
+            label: "",
           ),
           BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              color: Colors.yellow,
+            ),
             backgroundColor: Color.fromARGB(255, 35, 39, 44),
-            icon: Icon(Icons.person, color: Colors.yellow),
-            label: "account",
+            label: "",
           ),
         ],
       ),
@@ -272,8 +280,8 @@ class _HomeViewState extends State<HomeView> {
     required Color borderColor,
   }) {
     return Container(
-      width: 70,
-      height: 70,
+      width: 50,
+      height: 50,
       decoration: BoxDecoration(
         border: Border.all(color: borderColor),
         shape: BoxShape.circle,

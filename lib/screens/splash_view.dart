@@ -21,7 +21,7 @@ class _SplashViewState extends State<SplashView> {
 
   Future<void> setupSplash() async {
     await Future.delayed(const Duration(seconds: 2), () async {
-      await context.router.replace(HomeRoute());
+      await context.router.replace(LoginRoute());
     });
   }
 
