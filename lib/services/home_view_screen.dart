@@ -15,19 +15,3 @@ Future<List<Product>> fetchProducts() async {
     throw Exception('Failed to load products');
   }
 }
-
-Future<LoginResponse> loginApi(String username, String password) async {
-  LoginApi loginData = LoginApi(username: username, password: password);
-
-  final response = await http.post(
-    Uri.parse("https://fakestoreapi.com/auth/login"),
-    body: jsonEncode(loginData.toJson()),
-    headers: {'Content-Type': 'application/json'},
-  );
-
-  if (response.statusCode == 200) {
-    return LoginResponse.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception("Failed to login");
-  }
-}

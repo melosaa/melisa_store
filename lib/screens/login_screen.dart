@@ -1,9 +1,16 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:melisa_store/model/login_model.dart';
+import 'package:melisa_store/screens/home_view.dart';
+import 'package:melisa_store/screens/login_screen.dart';
+import 'package:melisa_store/services/loginservice_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController usernameController =
+      TextEditingController(text: "johnd");
+  final TextEditingController passwordController =
+      TextEditingController(text: "m38rmF\$");
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Text(
+                    Text(
                       "Login",
                       style: TextStyle(color: Colors.white, fontSize: 32),
                     ),
@@ -44,7 +51,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(30.0),
+                    padding: const EdgeInsets.all(24.0),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                               color: Colors.grey[100],
                             ),
                             child: TextField(
-                              controller: nameController,
+                              controller: usernameController,
                               decoration: const InputDecoration(
                                 hintText: "e-mail or phone number",
                                 border: InputBorder.none,
@@ -94,20 +101,31 @@ class LoginScreen extends StatelessWidget {
                           SizedBox(
                             height: 10,
                           ),
-                          Container(
-                            margin: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.black,
-                            ),
-                            height: 50,
-                            child: const Center(
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                          GestureDetector(
+                            onTap: () async {
+                              final username = usernameController.text;
+                              final password = passwordController.text;
+                              final response =
+                                  await loginApi(username, password);
+
+                              print("login succesful : ${response.token}");
+                              Navigator.of(context).pushNamed("/home");
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.black,
+                              ),
+                              height: 50,
+                              child: const Center(
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           ),

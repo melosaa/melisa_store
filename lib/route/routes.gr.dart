@@ -22,7 +22,7 @@ abstract class $AppRouter extends _i4.RootStackRouter {
     HomeRoute.name: (routeData) {
       return _i4.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.HomeView(),
+        child: _i1.HomeView(),
       );
     },
     ProductsRoute.name: (routeData) {
@@ -40,7 +40,7 @@ abstract class $AppRouter extends _i4.RootStackRouter {
     LoginRoute.name: (routeData) {
       return _i4.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.LoginScreen(),
+        child: _i5.LoginScreen(),
       );
     },
   };
