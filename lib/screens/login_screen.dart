@@ -1,12 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:melisa_store/model/login_model.dart';
+import 'package:melisa_store/route/router_path.dart';
+import 'package:melisa_store/route/routes.gr.dart';
 import 'package:melisa_store/screens/home_view.dart';
 import 'package:melisa_store/screens/login_screen.dart';
 import 'package:melisa_store/services/loginservice_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+@RoutePage()
+class LoginView extends StatelessWidget {
+  LoginView({super.key});
   final TextEditingController usernameController =
       TextEditingController(text: "johnd");
   final TextEditingController passwordController =
@@ -98,18 +101,22 @@ class LoginScreen extends StatelessWidget {
                           const Center(
                             child: Text("Forgot Password?"),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           GestureDetector(
                             onTap: () async {
                               final username = usernameController.text;
                               final password = passwordController.text;
-                              final response =
-                                  await loginApi(username, password);
+                              try {
+                                final response =
+                                    await loginApi(username, password);
 
-                              print("login succesful : ${response.token}");
-                              Navigator.of(context).pushNamed("/home");
+                                print("login succesful : ${response.token}");
+                                context.router.push(HomeRoute());
+                              } catch (e) {
+                                print("login failed :$e");
+                              }
                             },
                             child: Container(
                               margin: const EdgeInsets.all(20),
@@ -140,7 +147,7 @@ class LoginScreen extends StatelessWidget {
                           Row(
                             children: <Widget>[
                               Expanded(
-                                flex: 1,
+                                // flex: 1,
                                 child: Container(
                                   margin: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
