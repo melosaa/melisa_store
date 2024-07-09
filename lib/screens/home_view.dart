@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:melisa_store/blocs/home/bloc/home_bloc.dart';
 import 'package:melisa_store/model/products_model.dart';
+import 'package:melisa_store/services/home_view_screen.dart';
 
 @RoutePage()
 class HomeView extends StatelessWidget {
   HomeView({super.key});
+  final Future<List<Product>> futureProduct = fetchProducts();
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +155,7 @@ class HomeView extends StatelessWidget {
                     const SizedBox(height: 50),
                     Expanded(
                       child: FutureBuilder<List<Product>>(
-                        future: futureProducts,
+                        future: futureProduct,
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -178,8 +180,8 @@ class HomeView extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 Product product = snapshot.data![index];
                                 return Container(
-                                  padding: EdgeInsets.all(8.0),
-                                  margin: EdgeInsets.all(30.0),
+                                  padding: const EdgeInsets.all(8.0),
+                                  margin: const EdgeInsets.all(30.0),
                                   decoration: BoxDecoration(
                                     color: const Color.fromRGBO(
                                         232, 232, 232, 255),
