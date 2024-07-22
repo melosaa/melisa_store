@@ -20,5 +20,9 @@ class AppRouter extends $AppRouter {
           page: LoginRoute.page,
           path: RouterPath.login,
         ),
+        AutoRoute(
+          page: ProductDetailRoute.page,
+          path: RouterPath.productDetail,
+        ),
       ];
 }
