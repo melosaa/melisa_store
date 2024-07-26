@@ -3,4 +3,5 @@ class RouterPath {
   static const home = "/home";
   static const login = "/login";
   static const productDetail = "/product-detail";
+  static const cart = "/cart";
 }

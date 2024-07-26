@@ -262,6 +262,10 @@ class HomeView extends StatelessWidget {
                 context.router.push(ProductDetailRoute(
                   id: 1,
                 ));
+                break;
+              case 2:
+                context.router.push(CartRoute());
+                break;
             }
           },
           backgroundColor: const Color.fromARGB(255, 35, 39, 44),
