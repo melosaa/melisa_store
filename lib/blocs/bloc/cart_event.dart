@@ -7,9 +7,4 @@ abstract class CartEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CartsProductsEvent extends CartEvent {
-  const CartsProductsEvent();
-
-  @override
-  List<Object> get props => [];
-}
+class CartsProductsEvent extends CartEvent {}

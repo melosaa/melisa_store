@@ -13,9 +13,10 @@ final class CartLoading extends CartState {}
 
 final class CartSucces extends CartState {
   final List<CartModel> carts;
-  const CartSucces({required this.carts});
+  final List<Product> cartProducts;
+  const CartSucces({required this.carts, required this.cartProducts});
   @override
-  List<Object> get props => [carts];
+  List<Object> get props => [carts, cartProducts];
 }
 
 final class CartFail extends CartState {
