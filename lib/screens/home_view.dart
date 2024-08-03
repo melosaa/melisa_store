@@ -102,7 +102,7 @@ class HomeView extends StatelessWidget {
                       const SizedBox(height: 30),
                       Container(
                         height: 130,
-                        width: 280,
+                        width: 260,
                         decoration: BoxDecoration(
                           border: Border.all(
                               color: const Color.fromARGB(210, 118, 118, 119)),

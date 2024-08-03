@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:melisa_store/model/products_model.dart';
-
 import 'package:melisa_store/services/carts_services.dart';
-
 import '../blocs/bloc/cart_bloc.dart';
 
 class CartView extends StatelessWidget {
@@ -13,9 +11,10 @@ class CartView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Text("Cart"),
       ),
-      backgroundColor: Color.fromARGB(255, 244, 242, 242),
+      backgroundColor: Colors.white, // Arka plan rengini beyaz yapın
       body: BlocProvider<CartBloc>(
         create: (context) {
           final cartBloc = CartBloc(cartsService: CartsService());
@@ -39,91 +38,172 @@ class CartContent extends StatelessWidget {
           if (state.carts.isEmpty) {
             return const Center(child: Text("Your cart is empty"));
           }
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // 2 sütun
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
-            itemCount: state.carts.length,
-            itemBuilder: (context, index) {
-              final cart = state.carts[index];
 
-              return Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  color: Colors.white,
-                  elevation: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Cart ID: ${cart.id}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: Colors.black,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'User ID: ${cart.userId}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            color: Colors.grey[700],
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Date: ${cart.date}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black54,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        const SizedBox(height: 8),
-                        Expanded(
-                          child: ListView(
-                              shrinkWrap: true,
-                              children: state.cartProducts.map((product) {
-                                return ListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  title: Text(
-                                    'Product name: ${product.title}',
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
+          final cart = state.carts.first; // İlk sepete ulaşmak
+          return Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        color: Colors.white,
+                        child: Card(
+                          color: Colors.white,
+                          elevation: 4,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Cart ID: ${cart.id}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Colors.black,
                                   ),
-                                  subtitle: Text(
-                                    'price: ${product.price}',
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black54,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'User ID: ${cart.userId}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
+                                    color: Colors.grey[700],
                                   ),
-                                );
-                              }).toList()),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Date: ${cart.date}',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black54,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'Products:',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Column(
+                                  children: state.cartProducts.map((product) {
+                                    return Card(
+                                      color: Colors.white,
+                                      elevation: 2,
+                                      child: ListTile(
+                                        contentPadding:
+                                            const EdgeInsets.all(8.0),
+                                        leading: Image.network(
+                                          product.image,
+                                          width: 50,
+                                          height: 50,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const Icon(Icons.error,
+                                                size: 50);
+                                          },
+                                        ),
+                                        title: Text(
+                                          'Product name: ${product.title}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                        trailing: Text(product.id.toString()),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                style: TextStyle(fontSize: 10),
+                                                "Category: ${product.category}"),
+                                            Text(
+                                              'Price: ${product.price}',
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black54,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                            // Miktarı ekleyin
+                                            // Text(
+                                            //   'Quantity: ${product.quantity}',
+                                            //   style: const TextStyle(
+                                            //     fontSize: 12,
+                                            //     color: Colors.black54,
+                                            //   ),
+                                            //   overflow: TextOverflow.ellipsis,
+                                            //   maxLines: 1,
+                                            // ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                      // Ekstra alanlar burada eklenebilir
+                    ],
                   ),
                 ),
-              );
-            },
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.0),
+                  border: Border.all(color: Colors.grey.shade300),
+                  color: Colors.white,
+                ),
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Total: \$120",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(180, 40),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0.0)),
+                          backgroundColor:
+                              const Color.fromARGB(255, 64, 191, 255)),
+                      onPressed: () {},
+                      child: const Text(
+                        "Checkout",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           );
         } else if (state is CartFail) {
           return Center(child: Text(state.errorMessage));

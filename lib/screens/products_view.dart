@@ -1,6 +1,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:melisa_store/blocs/bloc/checkout_bloc.dart';
+import 'package:melisa_store/model/products_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:melisa_store/blocs/bloc/selected_products_bloc.dart';
@@ -17,6 +20,7 @@ class ProductDetailView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Text("Products"),
       ),
       body: MultiBlocProvider(
@@ -28,6 +32,9 @@ class ProductDetailView extends StatelessWidget {
           BlocProvider(
             create: (context) => SelectedProductsBloc(),
           ),
+          BlocProvider(
+            create: (context) => CheckoutBloc(),
+          )
         ],
         child: SingleChildScrollView(
           child: BlocBuilder<ProductDetailBloc, ProductDetailState>(
@@ -116,69 +123,84 @@ class _renderProductDetail extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 88, 199, 255)),
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              GestureDetector(
-                onTap: () {
-                  print("tıklandı");
-                  final bloc = BlocProvider.of<SelectedProductsBloc>(context);
-                  bloc.add(SelectedProducts("S"));
-                },
-                child: Container(
-                  width: 60,
-                  height: 80,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey.shade200)),
-                  child: const CircleAvatar(
-                    radius: 68,
-                    backgroundColor: Colors.white,
-                    child: Text("S"),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  print("tıklandı");
-                  final bloc = BlocProvider.of<SelectedProductsBloc>(context);
-                  bloc.add(SelectedProducts("M"));
-                },
-                child: Container(
-                  width: 60,
-                  height: 80,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey.shade200)),
-                  child: const CircleAvatar(
-                    radius: 68,
-                    backgroundColor: Colors.white,
-                    child: Text("M"),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  print("tıklandı");
-                  final bloc = BlocProvider.of<SelectedProductsBloc>(context);
-                  bloc.add(SelectedProducts("L"));
-                },
-                child: Container(
-                  width: 60,
-                  height: 80,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey.shade200)),
-                  child: const CircleAvatar(
-                    radius: 68,
-                    backgroundColor: Colors.white,
-                    child: Text("L"),
-                  ),
-                ),
-              ),
+              _SizeButton(size: "S"),
+              _SizeButton(size: "M"),
+              _SizeButton(size: "L"),
             ],
-          )
+          ),
+          Transform.translate(
+            offset: const Offset(2.0, 60.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.0),
+                border: Border.all(color: Colors.grey.shade300),
+                color: Colors.white,
+              ),
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Total: ${state.product.price}",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(180, 40),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0.0)),
+                        backgroundColor:
+                            const Color.fromARGB(255, 64, 191, 255)),
+                    onPressed: () {
+                      print("bloc çağrıldı");
+                      final bloc = BlocProvider.of<CheckoutBloc>(context);
+                      bloc.add(const CheckoutEvent());
+                    },
+                    child: const Text(
+                      "Checkout",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class _SizeButton extends StatelessWidget {
+  final String size;
+  const _SizeButton({super.key, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        print("Size $size seçildi");
+        final bloc = BlocProvider.of<SelectedProductsBloc>(context);
+        bloc.add(SelectedProducts(size));
+      },
+      child: Container(
+        width: 60,
+        height: 80,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.grey.shade200)),
+        child: CircleAvatar(
+          radius: 68,
+          backgroundColor: Colors.white,
+          child: Text(size),
+        ),
       ),
     );
   }

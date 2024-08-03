@@ -15,4 +15,6 @@ class SelectedProducts extends SelectedProductsEvent {
 
   @override
   List<Object> get props => [size];
+
+  void add(SelectedProducts selectedProducts) {}
 }

@@ -12,7 +12,7 @@ class SelectedProductsLoading extends SelectedProductsState {}
 class SelectedProductsFail extends SelectedProductsState {
   final String errorMessage;
 
-  SelectedProductsFail(this.errorMessage);
+  const SelectedProductsFail(this.errorMessage);
 
   @override
   List<Object> get props => [errorMessage];

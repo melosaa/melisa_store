@@ -29,6 +29,8 @@ class Product {
     );
   }
 
+  get quantity => null;
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
