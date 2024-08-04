@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:melisa_store/model/add_to_cart_response_model.dart';
 import 'package:melisa_store/model/products_model.dart';
 
 import 'package:melisa_store/services/carts_services.dart';
@@ -15,7 +16,22 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   CartBloc({required this.cartsService}) : super(CartInitial()) {
     on<CartsProductsEvent>(_onCartsProductsEvent);
+    on<AddToCartEvent>(_onAddToCartEvent);
   }
+
+  Future<void> _onAddToCartEvent(
+      AddToCartEvent event, Emitter<CartState> emit) async {
+    try {
+      emit(AddToCartLoading());
+      final addToCartResponse =
+          await cartsService.addToCart(event.productId);
+      emit(AddToCartSuccess( addToCartResponseModel: addToCartResponse));
+
+    } catch (e) {
+      emit(AddToCartFail(errorMessage: e.toString()));
+    }
+  }
+
 
   Future<void> _onCartsProductsEvent(
       CartsProductsEvent event, Emitter<CartState> emit) async {

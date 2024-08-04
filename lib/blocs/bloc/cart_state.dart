@@ -25,3 +25,20 @@ final class CartFail extends CartState {
   @override
   List<Object> get props => [errorMessage];
 }
+
+final class AddToCartLoading extends CartState {}
+
+final class AddToCartSuccess extends CartState {
+  final AddToCartResponseModel addToCartResponseModel;
+
+  AddToCartSuccess({required this.addToCartResponseModel});
+  @override
+  List<Object> get props => [addToCartResponseModel];
+}
+
+final class AddToCartFail extends CartState {
+  final String errorMessage;
+  AddToCartFail({required this.errorMessage});
+  @override
+  List<Object> get props => [errorMessage];
+}

@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:melisa_store/blocs/bloc/cart_bloc.dart';
 import 'package:melisa_store/blocs/bloc/checkout_bloc.dart';
 import 'package:melisa_store/model/products_model.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:melisa_store/blocs/product_detail/bloc/product_detail_bloc.dart'
 @RoutePage()
 class ProductDetailView extends StatelessWidget {
   const ProductDetailView({super.key, required this.id});
+
   final int id;
 
   @override
@@ -57,7 +59,9 @@ class ProductDetailView extends StatelessWidget {
 
 class _renderProductDetail extends StatelessWidget {
   _renderProductDetail({super.key, required this.state});
+
   ProductDetailSucces state;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -132,7 +136,7 @@ class _renderProductDetail extends StatelessWidget {
             ],
           ),
           Transform.translate(
-            offset: const Offset(2.0, 60.0),
+            offset: const Offset(2.0, 10.0),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
@@ -140,33 +144,57 @@ class _renderProductDetail extends StatelessWidget {
                 color: Colors.white,
               ),
               padding: const EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
                 children: [
-                  Text(
-                    "Total: ${state.product.price}",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(180, 40),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0.0)),
-                        backgroundColor:
-                            const Color.fromARGB(255, 64, 191, 255)),
-                    onPressed: () {
-                      print("bloc çağrıldı");
-                      final bloc = BlocProvider.of<CheckoutBloc>(context);
-                      bloc.add(const CheckoutEvent());
+                  BlocBuilder<CartBloc, CartState>(
+                    builder: (context, cartState) {
+                      if(cartState is AddToCartLoading){
+                        return const CircularProgressIndicator();
+                      } else if(cartState is AddToCartSuccess){
+                        return  Text("Oluşturulan sepet idsi: " + cartState.addToCartResponseModel.id.toString());
+                      } else if(cartState is AddToCartFail){
+                        return Text(cartState.errorMessage);
+                      }else{
+                        return const SizedBox();
+                      }
                     },
-                    child: const Text(
-                      "Checkout",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Total: ${state.product.price}",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(180, 40),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0.0)),
+                            backgroundColor:
+                                const Color.fromARGB(255, 64, 191, 255)),
+                        onPressed: () {
+                          print("bloc çağrıldı");
+                          // final bloc = BlocProvider.of<CheckoutBloc>(context);
+                          // bloc.add(const CheckoutEvent());
+
+                          context
+                              .read<CartBloc>()
+                              .add(AddToCartEvent(productId: state.product.id));
+                        },
+                        child:
+                            context.read<CartBloc>().state is AddToCartLoading
+                                ? const CircularProgressIndicator()
+                                : const Text(
+                                    "Checkout",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -180,6 +208,7 @@ class _renderProductDetail extends StatelessWidget {
 
 class _SizeButton extends StatelessWidget {
   final String size;
+
   const _SizeButton({super.key, required this.size});
 
   @override
